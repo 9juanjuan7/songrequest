@@ -21,15 +21,36 @@ h1 {
 
 /* ── DJ Screen ───────────────────────────────────────── */
 .dj-screen {
-  max-width: 600px;
+  max-width: 500px;
   margin: 0 auto;
   padding: 2rem 1rem;
   text-align: center;
 }
 
+.dj-screen h1 {
+  margin-bottom: 1.2rem;
+}
+
+.inline-card {
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.inline-success {
+  text-align: center;
+  color: #4ade80;
+  font-weight: 600;
+  padding: 1rem 0;
+}
+
+.qr-section {
+  margin-bottom: 2rem;
+}
+
 .dj-screen .subtitle {
   color: #aaa;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
 }
 
 .qr-wrapper {
@@ -48,8 +69,15 @@ h1 {
 
 /* ── Request list ────────────────────────────────────── */
 .request-list {
-  margin-top: 2rem;
+  margin-top: 1rem;
   text-align: left;
+}
+
+.request-list h2 {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  color: #aaa;
+  text-align: center;
 }
 
 .request-list .empty {

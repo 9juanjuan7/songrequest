@@ -1,18 +1,16 @@
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import {
+  addDoc,
   collection,
   onSnapshot,
   orderBy,
   query,
+  serverTimestamp,
   Timestamp,
 } from "firebase/firestore";
 import { db } from "../firebase";
 
-// ──────────────────────────────────────────────────────────
-// ⬇️  Change this to your deployed /request URL before the gig.
-//     During local dev you can leave it as-is.
-// ──────────────────────────────────────────────────────────
 const REQUEST_URL = window.location.origin + "/request";
 
 interface SongRequest {
@@ -24,6 +22,13 @@ interface SongRequest {
 
 export default function DJScreen() {
   const [requests, setRequests] = useState<SongRequest[]>([]);
+
+  // ── inline form state ──
+  const [song, setSong] = useState("");
+  const [note, setNote] = useState("");
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const q = query(
@@ -49,24 +54,90 @@ export default function DJScreen() {
     return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };
 
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setError("");
+
+    const trimmed = song.trim();
+    if (!trimmed) {
+      setError("Please enter a song + artist.");
+      return;
+    }
+
+    setSending(true);
+    try {
+      await addDoc(collection(db, "requests"), {
+        song: trimmed,
+        note: note.trim() || null,
+        createdAt: serverTimestamp(),
+      });
+      setSong("");
+      setNote("");
+      setSent(true);
+      setTimeout(() => setSent(false), 3000);
+    } catch {
+      setError("Something went wrong, please try again.");
+    } finally {
+      setSending(false);
+    }
+  };
+
   return (
     <div className="dj-screen">
-      <h1>DJ Requests</h1>
-      <p className="subtitle">Scan to request a song</p>
+      <h1>Request a Song 🎵</h1>
 
-      <div className="qr-wrapper">
-        <QRCodeSVG
-          value={REQUEST_URL}
-          size={250}
-          bgColor="#1a1a2e"
-          fgColor="#e0e0e0"
-          level="H"
-        />
+      {/* ── Inline request form ── */}
+      <div className="card inline-card">
+        {sent ? (
+          <p className="inline-success">Thanks, your request was sent!</p>
+        ) : (
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="song">Song + Artist *</label>
+            <input
+              id="song"
+              type="text"
+              placeholder='e.g. "Blinding Lights – The Weeknd"'
+              value={song}
+              onChange={(e) => setSong(e.target.value)}
+              autoFocus
+            />
+
+            <label htmlFor="note">Message / Dedication</label>
+            <input
+              id="note"
+              type="text"
+              placeholder="Optional"
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+            />
+
+            {error && <p className="error">{error}</p>}
+
+            <button type="submit" disabled={sending}>
+              {sending ? "Sending…" : "Send Request"}
+            </button>
+          </form>
+        )}
       </div>
 
-      <p className="url-hint">{REQUEST_URL}</p>
+      {/* ── QR code ── */}
+      <div className="qr-section">
+        <p className="subtitle">Or scan to request from your phone</p>
+        <div className="qr-wrapper">
+          <QRCodeSVG
+            value={REQUEST_URL}
+            size={200}
+            bgColor="#1a1a2e"
+            fgColor="#e0e0e0"
+            level="H"
+          />
+        </div>
+        <p className="url-hint">{REQUEST_URL}</p>
+      </div>
 
+      {/* ── Live request list ── */}
       <div className="request-list">
+        <h2>Live Requests</h2>
         {requests.length === 0 && (
           <p className="empty">No requests yet — waiting for songs…</p>
         )}
