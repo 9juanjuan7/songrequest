@@ -55,6 +55,7 @@ export default function RequestScreen() {
       });
       setSong("");
       setNote("");
+      setSent(true);
       setShowUpNext(true);
     } catch {
       setError("Something went wrong, please try again.");

@@ -101,7 +101,9 @@ export default function DJScreen() {
       });
       setSong("");
       setNote("");
+      setSent(true);
       setShowUpNext(true);
+      setTimeout(() => setSent(false), 3000);
     } catch {
       setError("Something went wrong, please try again.");
     } finally {
