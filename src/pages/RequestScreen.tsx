@@ -55,7 +55,6 @@ export default function RequestScreen() {
       });
       setSong("");
       setNote("");
-      setSent(true);
       setShowUpNext(true);
     } catch {
       setError("Something went wrong, please try again.");
@@ -107,7 +106,7 @@ export default function RequestScreen() {
                 disabled={sending}
                 onClick={handleUpNext}
               >
-                🔥 Request & Play NOW
+                🔥 Play Up Next
               </button>
             </div>
           </form>
@@ -117,9 +116,9 @@ export default function RequestScreen() {
       {showUpNext && (
         <div className="modal-overlay" onClick={() => setShowUpNext(false)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <p>haha e-transfer <strong>$7</strong> to</p>
+            <p>😂 E-transfer <strong>$7</strong> to</p>
             <p className="email">9juanjuan7@gmail.com</p>
-            <p>and i'll do it</p>
+            <p>and I'll play it next!</p>
             <button onClick={() => setShowUpNext(false)}>Got it</button>
           </div>
         </div>

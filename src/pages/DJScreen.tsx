@@ -152,7 +152,7 @@ export default function DJScreen() {
                 disabled={sending}
                 onClick={handleUpNext}
               >
-                🔥 Play Up Next
+                🔥Request & Play NOW
               </button>
             </div>
           </form>
@@ -163,9 +163,9 @@ export default function DJScreen() {
       {showUpNext && (
         <div className="modal-overlay" onClick={() => setShowUpNext(false)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <p>😂 E-transfer <strong>$7</strong> to</p>
+            <p>haha e-transfer <strong>$7</strong> to</p>
             <p className="email">9juanjuan7@gmail.com</p>
-            <p>and I'll play it next!</p>
+            <p>and i'll do it</p>
             <button onClick={() => setShowUpNext(false)}>Got it</button>
           </div>
         </div>
