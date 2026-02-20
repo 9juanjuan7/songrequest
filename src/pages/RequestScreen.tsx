@@ -1,6 +1,21 @@
-import { FormEvent, useState } from "react";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { FormEvent, useEffect, useState } from "react";
+import {
+  addDoc,
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+  serverTimestamp,
+  Timestamp,
+} from "firebase/firestore";
 import { db } from "../firebase";
+
+interface SongRequest {
+  id: string;
+  song: string;
+  note?: string;
+  createdAt: Timestamp | null;
+}
 
 export default function RequestScreen() {
   const [song, setSong] = useState("");
@@ -9,6 +24,31 @@ export default function RequestScreen() {
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
   const [showUpNext, setShowUpNext] = useState(false);
+  const [requests, setRequests] = useState<SongRequest[]>([]);
+
+  useEffect(() => {
+    const q = query(
+      collection(db, "requests"),
+      orderBy("createdAt", "desc")
+    );
+
+    const unsub = onSnapshot(q, (snap) => {
+      setRequests(
+        snap.docs.map((doc) => ({
+          id: doc.id,
+          ...(doc.data() as Omit<SongRequest, "id">),
+        }))
+      );
+    });
+
+    return unsub;
+  }, []);
+
+  const formatTime = (ts: Timestamp | null) => {
+    if (!ts) return "--:--";
+    const d = ts.toDate();
+    return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -123,6 +163,20 @@ export default function RequestScreen() {
           </div>
         </div>
       )}
+
+      <div className="request-list">
+        <h2>Live Requests</h2>
+        {requests.length === 0 && (
+          <p className="empty">No requests yet — be the first!</p>
+        )}
+        {requests.map((r) => (
+          <div key={r.id} className="request-item">
+            <span className="time">{formatTime(r.createdAt)}</span>
+            <span className="song">{r.song}</span>
+            {r.note && <span className="note">— {r.note}</span>}
+          </div>
+        ))}
+      </div>
 
       <footer className="connect-footer">
         <p>Connect with DJ JUan</p>
