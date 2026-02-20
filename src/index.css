@@ -198,6 +198,13 @@ h1 {
   margin-top: 0.75rem;
 }
 
+.rate-limit-hint {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #777;
+  margin-bottom: 1rem;
+}
+
 .success {
   text-align: center;
   padding: 1.5rem 0;
