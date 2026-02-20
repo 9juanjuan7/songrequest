@@ -208,3 +208,73 @@ h1 {
   color: #4ade80;
   font-weight: 600;
 }
+
+/* ── Button row ──────────────────────────────────────── */
+.btn-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.btn-row button {
+  flex: 1;
+  margin-top: 0;
+}
+
+.btn-upnext {
+  background: #e67e22 !important;
+}
+
+.btn-upnext:hover:not(:disabled) {
+  background: #cf6d17 !important;
+}
+
+/* ── Modal / popup ───────────────────────────────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 1rem;
+}
+
+.modal {
+  background: #1a1a2e;
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  max-width: 340px;
+  width: 100%;
+}
+
+.modal p {
+  font-size: 1.05rem;
+  margin-bottom: 0.5rem;
+}
+
+.modal .email {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #6c63ff;
+  margin: 0.75rem 0;
+  word-break: break-all;
+}
+
+.modal button {
+  margin-top: 1.25rem;
+  padding: 0.6rem 2rem;
+  border: none;
+  border-radius: 8px;
+  background: #6c63ff;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.modal button:hover {
+  background: #5a52d5;
+}

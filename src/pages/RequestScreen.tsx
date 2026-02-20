@@ -8,6 +8,7 @@ export default function RequestScreen() {
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
+  const [showUpNext, setShowUpNext] = useState(false);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -29,6 +30,32 @@ export default function RequestScreen() {
       setSong("");
       setNote("");
       setSent(true);
+    } catch {
+      setError("Something went wrong, please try again.");
+    } finally {
+      setSending(false);
+    }
+  };
+
+  const handleUpNext = async () => {
+    setError("");
+    const trimmed = song.trim();
+    if (!trimmed) {
+      setError("Please enter a song + artist.");
+      return;
+    }
+
+    setSending(true);
+    try {
+      await addDoc(collection(db, "requests"), {
+        song: trimmed,
+        note: note.trim() || null,
+        createdAt: serverTimestamp(),
+        priority: true,
+      });
+      setSong("");
+      setNote("");
+      setShowUpNext(true);
     } catch {
       setError("Something went wrong, please try again.");
     } finally {
@@ -69,12 +96,33 @@ export default function RequestScreen() {
 
             {error && <p className="error">{error}</p>}
 
-            <button type="submit" disabled={sending}>
-              {sending ? "Sending…" : "Send Request"}
-            </button>
+            <div className="btn-row">
+              <button type="submit" disabled={sending}>
+                {sending ? "Sending…" : "Send Request"}
+              </button>
+              <button
+                type="button"
+                className="btn-upnext"
+                disabled={sending}
+                onClick={handleUpNext}
+              >
+                🔥 Play Up Next
+              </button>
+            </div>
           </form>
         )}
       </div>
+
+      {showUpNext && (
+        <div className="modal-overlay" onClick={() => setShowUpNext(false)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <p>😂 E-transfer <strong>$7</strong> to</p>
+            <p className="email">9juanjuan7@gmail.com</p>
+            <p>and I'll play it next!</p>
+            <button onClick={() => setShowUpNext(false)}>Got it</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

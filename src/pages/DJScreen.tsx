@@ -29,6 +29,7 @@ export default function DJScreen() {
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
+  const [showUpNext, setShowUpNext] = useState(false);
 
   useEffect(() => {
     const q = query(
@@ -82,9 +83,35 @@ export default function DJScreen() {
     }
   };
 
+  const handleUpNext = async () => {
+    setError("");
+    const trimmed = song.trim();
+    if (!trimmed) {
+      setError("Please enter a song + artist.");
+      return;
+    }
+
+    setSending(true);
+    try {
+      await addDoc(collection(db, "requests"), {
+        song: trimmed,
+        note: note.trim() || null,
+        createdAt: serverTimestamp(),
+        priority: true,
+      });
+      setSong("");
+      setNote("");
+      setShowUpNext(true);
+    } catch {
+      setError("Something went wrong, please try again.");
+    } finally {
+      setSending(false);
+    }
+  };
+
   return (
     <div className="dj-screen">
-      <h1>Request a Song 🎵</h1>
+      <h1>Request a Song RMBS 2026</h1>
 
       {/* ── Inline request form ── */}
       <div className="card inline-card">
@@ -113,12 +140,34 @@ export default function DJScreen() {
 
             {error && <p className="error">{error}</p>}
 
-            <button type="submit" disabled={sending}>
-              {sending ? "Sending…" : "Send Request"}
-            </button>
+            <div className="btn-row">
+              <button type="submit" disabled={sending}>
+                {sending ? "Sending…" : "Send Request"}
+              </button>
+              <button
+                type="button"
+                className="btn-upnext"
+                disabled={sending}
+                onClick={handleUpNext}
+              >
+                🔥 Play Up Next
+              </button>
+            </div>
           </form>
         )}
       </div>
+
+      {/* ── Up-next popup ── */}
+      {showUpNext && (
+        <div className="modal-overlay" onClick={() => setShowUpNext(false)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <p>😂 E-transfer <strong>$7</strong> to</p>
+            <p className="email">9juanjuan7@gmail.com</p>
+            <p>and I'll play it next!</p>
+            <button onClick={() => setShowUpNext(false)}>Got it</button>
+          </div>
+        </div>
+      )}
 
       {/* ── QR code ── */}
       <div className="qr-section">
