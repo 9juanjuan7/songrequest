@@ -278,3 +278,33 @@ h1 {
 .modal button:hover {
   background: #5a52d5;
 }
+
+/* ── Connect footer ──────────────────────────────────── */
+.connect-footer {
+  margin-top: 2.5rem;
+  text-align: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid #222;
+}
+
+.connect-footer p {
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 0.6rem;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+}
+
+.social-links a {
+  color: #aaa;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.social-links a:hover {
+  color: #6c63ff;
+  transform: scale(1.15);
+}

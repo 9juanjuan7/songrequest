@@ -106,7 +106,7 @@ export default function RequestScreen() {
                 disabled={sending}
                 onClick={handleUpNext}
               >
-                🔥 Play Up Next
+                🔥Request & Play NOW
               </button>
             </div>
           </form>
@@ -116,13 +116,25 @@ export default function RequestScreen() {
       {showUpNext && (
         <div className="modal-overlay" onClick={() => setShowUpNext(false)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <p>😂 E-transfer <strong>$7</strong> to</p>
+            <p>haha e-transfer <strong>$7</strong> to</p>
             <p className="email">9juanjuan7@gmail.com</p>
-            <p>and I'll play it next!</p>
+            <p>and i'll do it</p>
             <button onClick={() => setShowUpNext(false)}>Got it</button>
           </div>
         </div>
       )}
+
+      <footer className="connect-footer">
+        <p>Connect with me</p>
+        <div className="social-links">
+          <a href="https://www.instagram.com/9juanjuan7/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5A4.25 4.25 0 0 0 20.5 16.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 1.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm5.25-2a.75.75 0 1 1 0 1.5.75.75 0 0 1 0-1.5Z"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/juan-rea7" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77Z"/></svg>
+          </a>
+        </div>
+      </footer>
     </div>
   );
 }
