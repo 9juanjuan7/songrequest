@@ -107,7 +107,7 @@ export default function RequestScreen() {
     <div className="request-screen">
       <div className="card">
         <h1>Request a Song RMBS 2026</h1>
-        <p className="rate-limit-hint">Please limit to one request every 30 minutes ❤️</p>
+        <p className="rate-limit-hint">Please limit to one request every 30 minutes ❤️<br />*if its shit im NOT playing it</p>
 
         {sent ? (
           <div className="success">
