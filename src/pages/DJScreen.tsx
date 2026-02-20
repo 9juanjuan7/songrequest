@@ -114,7 +114,7 @@ export default function DJScreen() {
   return (
     <div className="dj-screen">
       <h1>Request a Song RMBS 2026</h1>
-      <p className="rate-limit-hint">Please limit to one request every 30 minutes ❤️</p>
+      <p className="rate-limit-hint">Please limit to one request every 30 minutes ❤️<br>if its shit im not playing it</br></p>
 
       {/* ── Inline request form ── */}
       <div className="card inline-card">
