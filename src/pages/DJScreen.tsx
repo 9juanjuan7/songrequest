@@ -174,7 +174,7 @@ export default function DJScreen() {
 
       {/* ── QR code ── */}
       <div className="qr-section">
-        <p className="subtitle">Or scan to request from your phone</p>
+        <p className="subtitle">Or scan to request</p>
         <div className="qr-wrapper">
           <QRCodeSVG
             value={REQUEST_URL}
